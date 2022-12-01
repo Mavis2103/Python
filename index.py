@@ -51,7 +51,6 @@ def clear():
             "topic": ""
         },
         "movies_recommend": [],
-        "autocomplete": []
     }
 
 
@@ -97,7 +96,6 @@ if result:
         {"id": result[14], "name":result[13],
          "image":get_image(result[14])},
     ]
-    st.session_state["data"]["autocomplete"] = result[18]
 
 
 if search_input_value:
@@ -109,11 +107,7 @@ if st.session_state["data"]["most_movie"]["image"]:
 
 with col2:
     with st.form(key='search_form'):
-        st.text_input("Movie", key="search_input")
-        # st.selectbox('How would you like to be contacted?',
-        #              options=iter(
-        #                  np.array(st.session_state["data"]["autocomplete"])),
-        #              key="search_input")
+        st.text_input("Movie name", key="search_input")
         st.form_submit_button('Search')
     # Most Review Here
     st.header(st.session_state["data"]["most_movie"]["name"])
@@ -141,10 +135,6 @@ if 'search_dsc' not in st.session_state:
 
 with st.form(key='search_with_dsc'):
     st.text_area("Description", key="search_dsc")
-    # st.selectbox('How would you like to be contacted?',
-    #              options=iter(
-    #                  np.array(st.session_state["data"]["autocomplete"])),
-    #              key="search_input")
     st.form_submit_button('Search')
 
 
