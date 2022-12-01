@@ -1,10 +1,18 @@
+import sys
+from numpy import linalg as LA
+from scipy.spatial import distance
+from gensim.models import Doc2Vec
+from gensim.models.doc2vec import TaggedDocument
+import multiprocessing
+from nltk.corpus import stopwords
+from nltk import RegexpTokenizer
 import streamlit as st
 import pandas as pd
 import numpy as np
 import streamlit_nested_layout
 import json
 import psycopg2
-
+import doc
 # Func
 data = pd.read_csv("Data/result.csv")
 
@@ -122,7 +130,34 @@ if len(movies) > 0:
         cols_per_row = [r.columns(3) for r in rows]
         cols = [column for row in cols_per_row for column in row]
 
-        for image_index, cat_image in enumerate(movies):
+        for image_index, movie in enumerate(movies):
             card = cols[image_index]
-            card.image(cat_image["image"])
-            card.subheader(cat_image["name"])
+            card.image(movie["image"])
+            card.subheader(movie["name"])
+
+""" ---------------------------------------------------------------------------------------------------- """
+if 'search_dsc' not in st.session_state:
+    st.session_state['search_dsc'] = ''
+
+with st.form(key='search_with_dsc'):
+    st.text_area("Description", key="search_dsc")
+    # st.selectbox('How would you like to be contacted?',
+    #              options=iter(
+    #                  np.array(st.session_state["data"]["autocomplete"])),
+    #              key="search_input")
+    st.form_submit_button('Search')
+
+
+search_input_dsc_value = st.session_state["search_dsc"]
+if search_input_dsc_value:
+    movies_dsc = doc.out_similar(search_input_dsc_value)
+    if len(movies_dsc) > 0:
+        n_rows = 1 + len(movies_dsc) // int(4)
+        rows = [st.container() for _ in range(0, n_rows)]
+        cols_per_row = [r.columns(4) for r in rows]
+        cols = [column for row in cols_per_row for column in row]
+
+        for image_index, movie in enumerate(movies_dsc):
+            card = cols[image_index]
+            card.image(movie["image"])
+            card.subheader(movie["name"])
