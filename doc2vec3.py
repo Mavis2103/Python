@@ -20,7 +20,7 @@ class LabeledLineSentence(object):
         for uid, (line1,line2) in enumerate(zip(open(self.filename1),open(self.filename2))):
             yield gensim.models.doc2vec.LabeledSentence(nlp_clean(line1),line2.split())
 
-sentences = LabeledLineSentence('/home/eric/Data/reviewlist','/home/eric/Data/idlist')
+sentences = LabeledLineSentence('Data/reviewlist','Data/idlist')
 import gensim
 from gensim.models import Doc2Vec
 import os
@@ -34,4 +34,4 @@ assert gensim.models.doc2vec.FAST_VERSION > -1
 
 model = Doc2Vec(sentences, size=300, min_count=10, alpha=0.025, min_alpha=0.001, workers=multiprocessing.cpu_count())  
 
-model.save("/home/eric/Data/doc2vec.model")
+model.save("Data/doc2vec.model")

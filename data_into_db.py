@@ -6,14 +6,14 @@ from threading import Thread
 import re
 
 
-file = '/home/eric/Data/movies.txt'
+file = 'Data/movies.txt'
 
 global sql
 sql = ''
 
 
 def execute(sql):
-    conn = psycopg2.connect('dbname=movies user=eric password=950519')
+    conn = psycopg2.connect('dbname=movies user=postgres password=39339')
     cur = conn.cursor()
     cur.execute(sql)
     conn.commit()

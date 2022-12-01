@@ -25716,10 +25716,10 @@ INFO:gensim.models.word2vec:PROGRESS: at 99.99% examples, 182871 words/s, in_qsi
 INFO:gensim.models.word2vec:PROGRESS: at 100.00% examples, 182869 words/s, in_qsize 2, out_qsize 0
 INFO:gensim.models.word2vec:worker thread finished; awaiting finish of 0 more threads
 INFO:gensim.models.word2vec:training on 4898692340 raw words (4765036863 effective words) took 26057.1s, 182869 effective words/s
-INFO:gensim.utils:saving Doc2Vec object under /home/eric/Data/doc2vec2.model, separately None
-INFO:gensim.utils:storing np array 'syn0' to /home/eric/Data/doc2vec2.model.wv.syn0.npy
+INFO:gensim.utils:saving Doc2Vec object under Data/doc2vec2.model, separately None
+INFO:gensim.utils:storing np array 'syn0' to Data/doc2vec2.model.wv.syn0.npy
 INFO:gensim.utils:not storing attribute syn0norm
 INFO:gensim.utils:not storing attribute cum_table
-INFO:gensim.utils:storing np array 'syn1neg' to /home/eric/Data/doc2vec2.model.syn1neg.npy
-INFO:gensim.utils:saved /home/eric/Data/doc2vec2.model
+INFO:gensim.utils:storing np array 'syn1neg' to Data/doc2vec2.model.syn1neg.npy
+INFO:gensim.utils:saved Data/doc2vec2.model
 <built-in function sched_getaffinity>
