@@ -15,6 +15,9 @@ beautifulsoup4 = "*"
 lxml = "*"
 streamlit = "*"
 streamlit-nested-layout = "*"
+playwright = "*"
+polars = "*"
+python-amazon-paapi = "*"
 
 [dev-packages]
 

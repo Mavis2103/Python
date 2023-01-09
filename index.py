@@ -1,22 +1,17 @@
 import sys
-from numpy import linalg as LA
-from scipy.spatial import distance
-from gensim.models import Doc2Vec
-from gensim.models.doc2vec import TaggedDocument
-import multiprocessing
-from nltk.corpus import stopwords
-from nltk import RegexpTokenizer
-import streamlit as st
 import pandas as pd
-import numpy as np
-import streamlit_nested_layout
-import json
 import psycopg2
+import streamlit as st
+import streamlit_nested_layout
 import doc
-# Func
-data = pd.read_csv("Data/result.csv")
+
+# Read the result.csv file into a dataframe
+data = pd.read_csv("Data/result.csv", engine="c")
+
+# Cache the results of the out_similar() function to improve performance
 
 
+@st.cache
 def out_similar(movieid):
     '''get similar movie and related infos of the searched object; return none for exception'''
     result = data[data["0"] == movieid]
@@ -25,10 +20,23 @@ def out_similar(movieid):
         output = output.tolist()
         output[15] = output[15][1:-1].replace("'", "")
         output[18] = output[18][1:-1].replace("'", "").split(",")
-        with open('Data/movielist', 'r') as f:
-            x = f.read().split('\n')
+        with open('Data/movielist.txt', 'r') as f:
+            # Iterate over the lines in the file and append them to a list
+            x = [line for line in f]
         output.append(x)
         return output
+
+# Cache the results of the get_image() function to improve performance
+
+
+@st.cache
+def get_image(movieid):
+    '''get image of the searched object'''
+    sql = "SELECT movieimg FROM movieid WHERE movieid = %s LIMIT 1"
+    with psycopg2.connect('dbname=movies user=postgres password=39339') as conn:
+        # Read the image from the database
+        img = pd.read_sql_query(sql, con=conn, params=(movieid,))
+    return img['movieimg'][0]
 
 
 # Config
@@ -58,14 +66,6 @@ if 'search_input' not in st.session_state:
     clear()
 
 search_input_value = st.session_state['search_input']
-conn = psycopg2.connect('dbname=movies user=postgres password=39339')
-
-
-def get_image(movieid):
-    sql = "select movieimg from movieid where movieid ='"+movieid+"' limit 1"
-    img = pd.read_sql_query(sql, con=conn)
-    return img['movieimg'][0]
-
 
 if search_input_value:
     clear()

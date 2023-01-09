@@ -28,7 +28,7 @@ class LabeledLineSentence(object):
             yield TaggedDocument(nlp_clean(line1), [line2.strip('\n')])
 
 
-sentences = LabeledLineSentence('Data/reviewlist', 'Data/moviename')
+sentences = LabeledLineSentence('Data/reviewlist.txt', 'Data/moviename.txt')
 
 logging.basicConfig(level=logging.INFO)
 
@@ -37,3 +37,4 @@ model = Doc2Vec(sentences, vector_size=300, min_count=10, alpha=0.025,
                 min_alpha=0.001, dm_tag_count=1, seed=950519, workers=1)
 
 model.save("Data/doc2vec_moviename.model")
+print("8-done")

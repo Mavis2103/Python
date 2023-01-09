@@ -2,11 +2,12 @@ import logging
 import os
 from gensim.models import Doc2Vec
 import gensim
+import nltk
 from nltk import RegexpTokenizer
 from nltk.corpus import stopwords
 import multiprocessing
 from gensim.models.doc2vec import TaggedDocument
-
+nltk.download("stopwords")
 tokenizer = RegexpTokenizer('\w+|\$[\d\.]+|\S+')
 stopword_set = set(stopwords.words('english'))
 
@@ -30,7 +31,7 @@ class LabeledLineSentence(object):
             yield TaggedDocument(nlp_clean(line1), line2.split())
 
 
-sentences = LabeledLineSentence('./Data/reviewlist', './Data/idlist')
+sentences = LabeledLineSentence('./Data/reviewlist.txt', './Data/idlist.txt')
 
 logging.basicConfig(level=logging.INFO)
 
@@ -40,3 +41,4 @@ model = Doc2Vec(sentences, vector_size=300, min_count=10, alpha=0.025,
                 min_alpha=0.001, workers=multiprocessing.cpu_count())
 
 model.save("./Data/doc2vec.model")
+print("7-done")
